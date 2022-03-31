@@ -1,0 +1,25 @@
+name: Test Swift Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: test
+    runs-on: macos-11
+
+    steps:
+      - name: Checkout
+        run: |
+          git clone git@github.com:apple/swift.git --depth 1
+
+      - name: Checkout dependencies
+        run: |
+          swift/utils/update-checkout --clone
+
+      - name: Build
+        run: |
+          swift/utils/build-script -R
+
